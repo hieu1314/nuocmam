@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <link rel="icon" href="data:image/svg+xml,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <rect width='100' height='100' fill='white'/>
+  <text x='50%' y='60%' font-size='60' text-anchor='middle' fill='black' font-family='Arial'>584</text>
+</svg>">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nước Mắm Truyền Thống 584</title>
+    <!-- <script>
+    const correctPassword = "22122023"; // 👉 đổi mật khẩu ở đây
+    let entered = localStorage.getItem("accessOK");
+
+    if (!entered) {
+      const pass = prompt("🔑 Nhập mật khẩu để truy cập:");
+      if (pass === correctPassword) {
+        localStorage.setItem("accessOK", "yes");
+        alert("✅ Đăng nhập thành công!");
+      } else {
+        alert("❌ Sai mật khẩu!");
+        window.location.href = "https://google.com"; // hoặc link trang khác bạn muốn
+      }
+    }
+  </script> -->
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="chat-web.css">
+  <script type="module" src="firebase-config.js" defer></script>
+  <script type="module" src="chat-web.js" defer></script>
+
+   <script src="js/products.js" defer></script>
+<script src="js/translations.js" defer></script>
+<script src="js/cart.js" defer></script>
+<script src="js/checkout.js" defer></script>
+<script src="js/imageModal.js" defer></script>
+<script src="js/dropdown.js" defer></script>
+<script src="js/language.js" defer></script>
+<script src="js/main.js" defer></script>
+ 
+
+</head>
+<body id="top">
+  
+<header>
+  
+  <div class="header-container">
+    <h1 data-key="title">Nước Mắm 584 - Đại lý HCMC</h1>
+    <nav>
+      <div class="dropdown">
+        <a href="#top" class="nav-main" data-key="home">Trang chủ ▾</a>
+        <div class="dropdown-content">
+          <a href="gioithieu.html" data-key="about">Giới thiệu</a>
+          <a href="#sanpham" data-key="product_link">Sản phẩm</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a href="#" class="nav-cart">🌐 <span data-key="language">Ngôn ngữ▾</span> </a>
+        <div class="dropdown-content">
+          <a href="#" onclick="setLanguage('vi')">🇻🇳 Tiếng Việt</a>
+          <a href="#" onclick="setLanguage('en')">🇬🇧 English</a>
+          <a href="#" onclick="setLanguage('cn')">🇨🇳 中文</a>
+          <a href="#" onclick="setLanguage('jp')">🇯🇵 日本語</a>
+          <a href="#" onclick="setLanguage('kr')">🇰🇷 한국어</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+<div class="header-flash-line"></div>
+
+<section id="sanpham" class="product-section">
+  <h2 data-key="product_list">DANH MỤC SẢN PHẨM</h2>
+  <div id="product-list" class="product-list"></div>
+</section>
+
+<!-- GIỎ HÀNG WEB -->
+<aside id="giohang" class="cart-section">
+  <h2 data-key="cart_title">GIỎ HÀNG CỦA BẠN</h2>
+  <div id="cart-items"></div>
+  <div class="cart-summary">
+    <p><span data-key="total">Tổng tiền:</span> <strong id="cart-total">0₫</strong></p>
+    <button id="checkout-btn" onclick="openCheckout()" data-key="buy">Mua hàng</button>
+    <button id="clear-btn" onclick="clearCart()" data-key="clear"> Xóa </button>
+  </div>
+</aside>
+
+
+<!-- Overlay và Modal Thông tin giao hàng -->
+<div id="checkout-overlay" class="checkout-overlay"></div>
+<div class="checkout-modal" id="checkout-modal">
+  <h3 data-key="checkout_title">THÔNG TIN GIAO HÀNG</h3>
+
+  <label for="name" data-key="label_name">Họ tên:</label>
+  <input type="text" id="name" placeholder="Nhập họ tên" data-key-placeholder="placeholder_name">
+
+  <label for="phone" data-key="label_phone">SĐT:</label>
+  <input type="text" id="phone" placeholder="Nhập số điện thoại" data-key-placeholder="placeholder_phone">
+
+  <label for="address" data-key="label_address">Địa chỉ:</label>
+  <textarea id="address" placeholder="Nhập địa chỉ" data-key-placeholder="placeholder_address"></textarea>
+
+  <button id="checkout-confirm-btn" data-key="checkout_confirm" data-key="confirm">Xác nhận</button>
+  <button data-key="cancel">Hủy</button>
+</div>
+
+
+<footer id="footer">
+  <p data-key="footer_text">
+    Copyright © <span id="year"></span> Nước Mắm 584 - Đại lý Hồ Chí Minh
+  </p>
+</footer>
+
+
+  <!-- Modal hiển thị hình ảnh -->
+<div id="image-modal" class="modal hidden">
+  <div class="modal-content">
+    <span id="close-modal" class="close">&times;</span>
+    <img id="modal-img" src="" alt="Hình sản phẩm">
+  </div>
+
+</div>
+
+
+  
+<button class="chat-floating-btn" id="chatToggleBtn" onclick="toggleChat()">💬</button>
+
+<div id="chatBox" class="chatbox">
+  <div class="chatbox-header" onclick="toggleChat()">💬 Hãy nhắn yêu cầu của bạn tại đây</div>
+
+  <div class="chatbox-body">
+
+    <div id="chatMessages" class="messages"></div>
+
+    <!-- Nhập tin nhắn -->
+    <div class="chat-input">
+      <input type="text" id="chatMessage" placeholder="Nhập tin nhắn..." autocomplete="off">
+      <button id="emojiBtn">😄</button>
+      <button onclick="sendMessage()">Gửi</button>
+    </div>
+
+    <!-- ================== EMOJI PANEL (đã sửa) ================== -->
+    <div id="emojiPanel" class="emoji-panel">
+
+      <!-- TAB BUTTONS -->
+      <div class="emoji-tabs">
+        <button onclick="openEmojiTab('tab-smileys')" class="emoji-tab active">😊</button>
+        <button onclick="openEmojiTab('tab-animals')" class="emoji-tab">🐶</button>
+        <button onclick="openEmojiTab('tab-food')" class="emoji-tab">🍔</button>
+        <button onclick="openEmojiTab('tab-travel')" class="emoji-tab">✈️</button>
+        <button onclick="openEmojiTab('tab-symbols')" class="emoji-tab">❤️</button>
+      </div>
+
+      <!-- TAB CONTENT: Smileys -->
+      <div id="tab-smileys" class="emoji-content show">
+        <span onclick="addEmoji('😀')">😀</span>
+        <span onclick="addEmoji('😁')">😁</span>
+        <span onclick="addEmoji('😂')">😂</span>
+        <span onclick="addEmoji('🤣')">🤣</span>
+        <span onclick="addEmoji('😃')">😃</span>
+        <span onclick="addEmoji('😄')">😄</span>
+        <span onclick="addEmoji('😅')">😅</span>
+        <span onclick="addEmoji('😉')">😉</span>
+        <span onclick="addEmoji('😊')">😊</span>
+      </div>
+
+      <!-- TAB CONTENT: Animals -->
+      <div id="tab-animals" class="emoji-content">
+        <span onclick="addEmoji('🐶')">🐶</span>
+        <span onclick="addEmoji('🐱')">🐱</span>
+        <span onclick="addEmoji('🐭')">🐭</span>
+        <span onclick="addEmoji('🐹')">🐹</span>
+        <span onclick="addEmoji('🐰')">🐰</span>
+        <span onclick="addEmoji('🦊')">🦊</span>
+        <span onclick="addEmoji('🐻')">🐻</span>
+        <span onclick="addEmoji('🐼')">🐼</span>
+      </div>
+
+      <!-- TAB CONTENT: Food -->
+      <div id="tab-food" class="emoji-content">
+        <span onclick="addEmoji('🍏')">🍏</span>
+        <span onclick="addEmoji('🍎')">🍎</span>
+        <span onclick="addEmoji('🍐')">🍐</span>
+        <span onclick="addEmoji('🍊')">🍊</span>
+        <span onclick="addEmoji('🍋')">🍋</span>
+        <span onclick="addEmoji('🍉')">🍉</span>
+        <span onclick="addEmoji('🍇')">🍇</span>
+      </div>
+
+      <!-- TAB CONTENT: Travel -->
+      <div id="tab-travel" class="emoji-content">
+        <span onclick="addEmoji('✈️')">✈️</span>
+        <span onclick="addEmoji('🚗')">🚗</span>
+        <span onclick="addEmoji('🚕')">🚕</span>
+        <span onclick="addEmoji('🚌')">🚌</span>
+        <span onclick="addEmoji('🏠')">🏠</span>
+        <span onclick="addEmoji('🏫')">🏫</span>
+      </div>
+
+      <!-- TAB CONTENT: Symbols -->
+      <div id="tab-symbols" class="emoji-content">
+        <span onclick="addEmoji('❤️')">❤️</span>
+        <span onclick="addEmoji('💖')">💖</span>
+        <span onclick="addEmoji('✨')">✨</span>
+        <span onclick="addEmoji('⭐')">⭐</span>
+        <span onclick="addEmoji('🔥')">🔥</span>
+        <span onclick="addEmoji('💯')">💯</span>
+      </div>
+
+    </div><!-- END EMOJI PANEL -->
+
+  </div>
+</div>
+
+<!-- Popup nhập username -->
+<div id="namePrompt"
+     style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);
+     align-items:center;justify-content:center;z-index:3000;">
+  <div style="background:white;padding:20px;border-radius:10px;text-align:center;max-width:300px;">
+    <h3>Nhập tên của bạn</h3>
+    <input type="text" id="usernameInput"
+           placeholder="VD: Hieu, Lan..."
+           style="width:100%;padding:8px;margin-top:10px;" autocomplete="off">
+    <button onclick="saveUsername()"
+            style="margin-top:10px;padding:8px 15px;background:#1e3d7b;color:white;border:none;border-radius:5px;cursor:pointer;">
+      Lưu tên
+    </button>
+  </div>
+</div>
+
+
+<!-- 🔹 Nút mở thống kê truy cập -->
+<div id="stats-toggle">></div>
+
+<!-- 🔹 Khung thống kê truy cập -->
+<div id="stats-panel">
+  <h3>THỐNG KÊ TRUY CẬP</h3>
+ <p>👤 Đang online: <span id="online">0</span></p>
+<p>📅 Hôm nay: <span id="today">0</span></p>
+<p>📆 Hôm qua: <span id="yesterday">0</span></p>
+<p>📈 Tuần này: <span id="thisweek">0</span></p>
+<p>📊 Tuần trước: <span id="lastweek">0</span></p>
+<p>🗓️ Tháng này: <span id="thismonth">0</span></p>
+<p>📅 Tháng trước: <span id="lastmonth">0</span></p>
+
+</div>
+  
+</body>
+</html>
