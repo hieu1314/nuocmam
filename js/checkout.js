@@ -34,11 +34,29 @@ function initCheckoutModal() {
   confirmBtn.addEventListener("click", checkoutConfirm);
 }
 
+// function openCheckout() {
+//   if (Object.keys(cart).length === 0) {
+//     alert("Giỏ hàng trống!");
+//     return;
+//   }
+//   document.getElementById("checkout-overlay").style.display = "block";
+//   document.getElementById("checkout-modal").style.display = "block";
+// }
+
+// Hàm mở modal thông báo khi bấm "Mua hàng"
 function openCheckout() {
-  if (Object.keys(cart).length === 0) {
-    alert("Giỏ hàng trống!");
-    return;
-  }
-  document.getElementById("checkout-overlay").style.display = "block";
-  document.getElementById("checkout-modal").style.display = "block";
+  // Ẩn giỏ hàng
+  cartSection.style.display = 'none';
+
+  // Hiển thị modal thông báo
+  document.getElementById('checkout-overlay').style.display = 'flex';
+}
+
+// Hàm đóng modal thông báo
+function closeCheckout() {
+  // Ẩn modal
+  document.getElementById('checkout-overlay').style.display = 'none';
+
+  // Hiển thị lại giỏ hàng (nếu cần)
+  cartSection.style.display = 'block';
 }
