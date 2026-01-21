@@ -23,7 +23,6 @@ body {
    HEADER – CARO NHẸ + CHỮ CẦU VỒNG
    ================================ */
 header {
-
   padding: 14px 0;
   text-align: center;
   position: relative;
@@ -53,8 +52,7 @@ margin: 0;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  
-
+ 
   background-image: linear-gradient(
     90deg,
     red,
@@ -77,7 +75,6 @@ margin: 0;
   0% { background-position: 0%; }
   100% { background-position: 350%; }
 }
-
 
 /* ================================
    MENU – TRANG CHỦ & NGÔN NGỮ
@@ -299,83 +296,6 @@ background: rgba(255, 200, 200, 0.9); /* đỏ nhạt */
 }
 
 
-/* Cart section */
-.cart-section {
-  position: fixed;
-  right: 18px;
-  top: 180px;
-  width: 300px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.12);
-  z-index: 100;
- max-height: 80vh; /* 90% chiều cao màn hình */
-  overflow-y: auto;    /* scroll dọc nếu vượt quá */
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-.cart-section h2 {
-  font-size: 22px;
-  color: #c0392b;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 15px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-}
-
-.cart-item {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 10px;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.cart-thumb {
-  width: 55px;
-  height: 55px;
-  object-fit: contain;
-  border-radius: 6px;
-  background: #fafafa;
-  border: 1px solid #eee;
-}
-
-.cart-info {
-  text-align: left;
-}
-
-
-.cart-item strong {
-  font-size: 15px;
-  color: #333;
-  text-align: left;
-  line-height: 1.4;
-}
-
-.cart-item span {
-  min-width: 20px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.cart-item button.delete-btn {
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.cart-item button.delete-btn:hover {
-  background: #e60000;
-}
-
 
 /* Footer */
 #footer {
@@ -387,23 +307,20 @@ background: rgba(255, 200, 200, 0.9); /* đỏ nhạt */
   font-family: Arial, sans-serif;
 }
 
-/* ==========================
-   CHECKOUT MODAL (GỘP & TỐI ƯU)
-========================== */
+/*----*/
+  #checkout-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
 
-/* Nền đen phía sau modal */
-.checkout-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 900;
-}
-
-/* Hộp modal thanh toán */
 .checkout-modal {
   display: none;
   position: fixed;
@@ -415,89 +332,70 @@ background: rgba(255, 200, 200, 0.9); /* đỏ nhạt */
   width: 90%;
   max-width: 420px;
   border-radius: 12px;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.18);
-  z-index: 1000;
-  font-family: Arial, sans-serif;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+  z-index: 1001;
   text-align: left;
 }
 
-/* Tiêu đề */
 .checkout-modal h3 {
   text-align: center;
-  font-size: 20px;
-  margin-bottom: 18px;
+  margin-bottom: 15px;
 }
 
-/* Nhãn */
 .checkout-modal label {
   display: block;
   margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 600;
+  font-weight: bold;
 }
 
-/* Input & textarea */
 .checkout-modal input,
 .checkout-modal textarea {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  box-sizing: border-box;
 }
 
-.checkout-modal textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-/* Nút chung */
 .checkout-modal button {
   width: 100%;
-  padding: 12px;
-  margin-top: 14px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-
-/* Nút Mua hàng */
-#checkout-btn {
-  background: #27ae60;
-  color: white;
-  padding: 9px 14px;     /* tăng 1 chút */
-  font-size: 15px;       /* lớn hơn nhẹ */
-  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
-  transition: 0.2s ease;
 }
 
-#checkout-btn:hover {
-  background: #1e8e4f;
-  transform: translateY(-1px);
-}
+  .checkout-message {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
 
-/* Nút Xóa */
-#clear-btn {
-  background: #e74c3c;
-  color: white;
-  padding: 9px 14px;     /* giống nút mua */
-  font-size: 15px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
+  .checkout-message h2 {
+    margin-bottom: 10px;
+  }
 
-#clear-btn:hover {
-  background: #c0392b;
-  transform: translateY(-1px);
-}
+  .checkout-message p {
+    margin-bottom: 20px;
+  }
 
+  .checkout-message button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .checkout-message button:hover {
+    background-color: #45a049;
+  }
+/*----*/
 
 /* Nút Xác nhận */
 #checkout-confirm-btn {
@@ -625,4 +523,21 @@ background: rgba(255, 200, 200, 0.9); /* đỏ nhạt */
   align-items: center;
 }
 
+}
+
+/* ===== FOOTER ===== */
+#footer {
+  background: rgba(30, 61, 123, 0.9); /* xanh chat */
+  color: white;
+  text-align: center;
+  padding: 16px 0;
+  margin-top: 40px;
+  font-family: Arial, sans-serif;
+
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+#footer span,
+#footer strong {
+  color: #ffd700; /* vàng nhẹ – sang */
 }

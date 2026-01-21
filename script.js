@@ -1,4 +1,3 @@
-// =================== DANH SÁCH SẢN PHẨM ===================
 // =================== DANH SÁCH SẢN PHẨM NGUYÊN BẢN (ID + giá + ảnh) ===================
 const products = [
   { id: 1, price: 35000, img: "images/30nb.png" },
@@ -58,8 +57,6 @@ const productTranslations = {
     7: { title: "누억맘 584 전통 20°N (500ml)", desc: "가벼운 맛, 일상 요리에 적합" }
   }
 };
-
-
 
 // =================== TRANSLATIONS ===================
 const translations = {
@@ -175,7 +172,6 @@ const translations = {
   }
 };
 
-let cart = {};
 let currentLang = localStorage.getItem("lang") || "vi";
 
 // =================== HIỂN THỊ SẢN PHẨM ===================
@@ -190,67 +186,6 @@ function renderProducts(lang = currentLang) {
       <button onclick="addToCart(${p.id})" data-key="buy">${translations[lang].buy}</button>
     </div>
   `).join("");
-}
-
-// =================== GIỎ HÀNG ===================
-function addToCart(id) {
-  cart[id] = (cart[id] || 0) + 1;
-  renderCart();
-}
-
-function removeItem(id) {
-  delete cart[id];
-  renderCart();
-}
-
-function changeQuantity(id, delta) {
-  if (!cart[id]) return;
-  cart[id] += delta;
-  if (cart[id] <= 0) delete cart[id];
-  renderCart();
-}
-
-function clearCart() {
-  cart = {};
-  renderCart();
-}
-
-// =================== HIỂN THỊ GIỎ HÀNG ===================
-function renderCart() {
-  const container = document.getElementById("cart-items");
-  const ids = Object.keys(cart);
-  const totalEl = document.getElementById("cart-total");
-
-  if (ids.length === 0) {
-    container.innerHTML = `<p>${translations[currentLang].cart_empty}</p>`;
-    totalEl.textContent = "0₫";
-    return;
-  }
-
-  let total = 0;
-  container.innerHTML = ids.map(k => {
-    const p = products.find(x => x.id == k);
-    const title = productTranslations[currentLang][p.id].title;
-    const qty = cart[k];
-    total += p.price * qty;
-
-    return `
-      <div class="cart-item">
-        <img class="cart-thumb" src="${p.img}" alt="${title}">
-        <div class="cart-info">
-          <strong>${title}</strong>
-          <div class="quantity-controls">
-            <button class="qty-btn" onclick="changeQuantity(${p.id}, -1)">–</button>
-            <span>${qty}</span>
-            <button class="qty-btn" onclick="changeQuantity(${p.id}, 1)">+</button>
-          </div>
-        </div>
-        <button class="delete-btn" onclick="removeItem(${p.id})">Xóa</button>
-      </div>
-    `;
-  }).join("");
-
-  totalEl.textContent = total.toLocaleString() + "₫";
 }
 
 // =================== CHECKOUT MODAL ===================

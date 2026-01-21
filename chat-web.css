@@ -1,23 +1,39 @@
-/* Chat floating button */
+/* ===== CHAT FLOATING BUTTON (ĐẸP + CÂN) ===== */
 .chat-floating-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
+  bottom: 22px;
+  right: 22px;
+
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  background: #1e3d7b;
+
+  background: linear-gradient(135deg, #1e3d7b, #cfe604);
   color: white;
-  font-size: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+  line-height: 1;
+
   border: none;
   cursor: pointer;
+
   z-index: 3000;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.2s, background 0.2s;
+  box-shadow:
+    0 6px 16px rgba(0,0,0,0.25),
+    inset 0 2px 4px rgba(255,255,255,0.25);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 .chat-floating-btn:hover {
-  background: #355ac9;
-  transform: scale(1.1);
+  transform: scale(1.12);
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.35),
+    inset 0 2px 6px rgba(255,255,255,0.35);
 }
 
 /* Chatbox */
@@ -162,7 +178,7 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  background: #007bff;
+  background: #e8f0815b;
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -199,10 +215,29 @@
 #stats-panel h3 {
   text-align: left;
   padding-left: 10px; /* cách lề trái một chút cho đẹp */
-  background: #007bff;
+  background: #07e925;
   color: white;
   border-radius: 0 10px 0 0;
   margin: -10px -10px 10px -10px;
 }
 #stats-panel.open { left: 0; }
 #stats-toggle.open { left: 250px; }
+
+/* HEADER CHAT */
+.chatbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+#chat-close {
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+#chat-close:hover {
+  opacity: 1;
+  color: #ff4d4d;
+}

@@ -29,16 +29,16 @@
   <link rel="stylesheet" href="chat-web.css">
   <script type="module" src="firebase-config.js" defer></script>
   <script type="module" src="chat-web.js" defer></script>
+  <link rel="stylesheet" href="cart.css">
 
    <script src="js/products.js" defer></script>
 <script src="js/translations.js" defer></script>
-<script src="js/cart.js" defer></script>
 <script src="js/checkout.js" defer></script>
 <script src="js/imageModal.js" defer></script>
 <script src="js/dropdown.js" defer></script>
 <script src="js/language.js" defer></script>
 <script src="js/main.js" defer></script>
- 
+ <script src="cart.js" defer></script>
 
 </head>
 <body id="top">
@@ -75,52 +75,40 @@
   <div id="product-list" class="product-list"></div>
 </section>
 
+<!-- NÚT GIỎ HÀNG TRÒN -->
+<div id="cart-toggle" class="cart-toggle">
+  🛒
+  <span id="cart-badge" class="cart-badge">0</span>
+</div>
 
-
-<!-- GIỎ HÀNG WEB -->
+<!-- PANEL GIỎ HÀNG -->
 <aside id="giohang" class="cart-section">
-  <h2 data-key="cart_title">GIỎ HÀNG CỦA BẠN</h2>
+  <div class="cart-header">
+    <h2 id="cart-title" data-key="cart_title">GIỎ HÀNG CỦA BẠN</h2>
+    <span id="cart-close">✖</span>
+  </div>
+
   <div id="cart-items"></div>
+
   <div class="cart-summary">
-    <p><span data-key="total">Tổng tiền:</span> <strong id="cart-total">0₫</strong></p>
-    <button id="checkout-btn" onclick="openCheckout()" data-key="buy">Mua hàng</button>
-    <button id="clear-btn" onclick="clearCart()" data-key="clear"> Xóa </button>
+    <p>
+      <span data-key="total">Tổng tiền:</span>
+      <strong id="cart-total">0₫</strong>
+    </p>
+
+    <button id="checkout-btn" onclick="openCheckout()" data-key="buy">
+      Mua hàng
+    </button>
+    <button id="clear-btn" onclick="clearCart()" data-key="clear">
+      Xóa
+    </button>
   </div>
 </aside>
 
-<!-- Modal thông báo -->
-<div id="checkout-overlay" class="checkout-overlay">
-  <div class="checkout-message">
-    <h2>Thông tin giao hàng</h2>
-    <p>Hiện tại đặt hàng online đang bị lỗi!<p>
-    </p>Hãy để lại yêu cầu bên dưới, tôi sẽ liên lạc với bạn sau.</p>
-    <button onclick="closeCheckout()">Đóng</button>
-  </div>
-</div>
-
-
-<!-- Overlay và Modal Thông tin giao hàng
-<div id="checkout-overlay" class="checkout-overlay"></div>
-<div class="checkout-modal" id="checkout-modal">
-  <h3 data-key="checkout_title">THÔNG TIN GIAO HÀNG</h3>
-
-  <label for="name" data-key="label_name">Họ tên:</label>
-  <input type="text" id="name" placeholder="Nhập họ tên" data-key-placeholder="placeholder_name">
-
-  <label for="phone" data-key="label_phone">SĐT:</label>
-  <input type="text" id="phone" placeholder="Nhập số điện thoại" data-key-placeholder="placeholder_phone">
-
-  <label for="address" data-key="label_address">Địa chỉ:</label>
-  <textarea id="address" placeholder="Nhập địa chỉ" data-key-placeholder="placeholder_address"></textarea>
-
-  <button id="checkout-confirm-btn" data-key="checkout_confirm" data-key="confirm">Xác nhận</button>
-  <button data-key="cancel">Hủy</button> -->
-</div>
-
-
 <footer id="footer">
   <p data-key="footer_text">
-    Copyright © <span id="year"></span> Nước Mắm 584 - Đại lý Hồ Chí Minh
+    © 2026 <strong>Nước Mắm 584 - Đại lý HCMC</strong> — All rights reserved.  
+    <span>| Designed by NHH</span>
   </p>
 </footer>
 
@@ -139,7 +127,10 @@
 <button class="chat-floating-btn" id="chatToggleBtn" onclick="toggleChat()">💬</button>
 
 <div id="chatBox" class="chatbox">
-  <div class="chatbox-header" onclick="toggleChat()">💬 Hãy nhắn yêu cầu của bạn tại đây</div>
+  <div class="chatbox-header" id="chat-header">
+  <span>💬 Liên lạc với chúng tôi!</span>
+  <span id="chat-close">✖</span>
+</div>
 
   <div class="chatbox-body">
 
@@ -243,7 +234,7 @@
 
 
 <!-- 🔹 Nút mở thống kê truy cập -->
-<div id="stats-toggle">></div>
+<div id="stats-toggle">💖</div>
 
 <!-- 🔹 Khung thống kê truy cập -->
 <div id="stats-panel">

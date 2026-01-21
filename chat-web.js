@@ -8,11 +8,6 @@ const emojiPanel = document.getElementById("emojiPanel");
 let username = localStorage.getItem('chatUsername') || null;
 let lastChatTime = 0;
 
-// Toggle chat box (chỉ mở/đóng chat, không gọi popup tên)
-window.toggleChat = function(){
-  chatBox.classList.toggle("show");
-}
-
 // Emoji
 emojiBtn.addEventListener("click", e=>{
   e.stopPropagation(); 
@@ -143,5 +138,32 @@ const statsPanel = document.getElementById("stats-panel");
 toggleBtn.addEventListener("click", ()=>{
   toggleBtn.classList.toggle("open");
   statsPanel.classList.toggle("open");
-  toggleBtn.textContent = statsPanel.classList.contains("open") ? "<" : ">";
+  toggleBtn.textContent = statsPanel.classList.contains("open") ? "<" : "💖";
+});
+
+// ================= CHAT TOGGLE (GIỐNG GIỎ HÀNG) =================
+document.addEventListener("DOMContentLoaded", () => {
+  const chatBtn = document.getElementById("chatToggleBtn"); // nút tròn 💬
+  const chatBox = document.getElementById("chatBox");       // khung chat
+  const chatHeader = document.getElementById("chat-header");// title
+  const chatClose = document.getElementById("chat-close");  // nút ✖
+
+  // MỞ CHAT → ẨN NÚT TRÒN
+  chatBtn.addEventListener("click", () => {
+    chatBox.classList.add("show");
+    chatBtn.style.display = "none";
+  });
+
+  // ĐÓNG CHAT → HIỆN NÚT TRÒN
+function closeChat() {
+  chatBox.classList.remove("show");
+
+  // đợi chat trượt xuống xong (0.5s)
+  setTimeout(() => {
+    chatBtn.style.display = "flex";
+  }, 500);
+}
+
+  chatHeader.addEventListener("click", closeChat);
+  chatClose.addEventListener("click", closeChat);
 });

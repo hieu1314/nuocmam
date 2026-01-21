@@ -75,20 +75,20 @@
     <pre id="readme-content">Đang tải nội dung giới thiệu...</pre>
   </main>
 
-  <footer>
-    Copyright © <span id="year"></span> Nước Mắm 584 - Nguyễn Hoàng Hiếu
-  </footer>
+<footer id="footer">
+  <p data-key="footer_text">
+    © 2026 <strong>Nước Mắm 584 - Đại lý HCMC</strong> — All rights reserved.  
+    <span>| Designed by NHH</span>
+  </p>
+</footer>
 
   <script>
-    // Hiển thị năm hiện tại
-    document.getElementById("year").textContent = new Date().getFullYear();
-
     // Tải nội dung từ readme.txt
     fetch("readme.txt")
       .then(r => r.text())
       .then(t => document.getElementById("readme-content").textContent = t)
       .catch(() => document.getElementById("readme-content").textContent = "Không thể tải nội dung giới thiệu.");
   </script>
-
+  
 </body>
 </html>
