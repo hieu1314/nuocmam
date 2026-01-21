@@ -1,11 +1,17 @@
-// =================== CHECKOUT MODAL ===================
 function initCheckoutModal() {
   const overlay = document.getElementById("checkout-overlay");
   const modal = document.getElementById("checkout-modal");
   const confirmBtn = document.getElementById("checkout-confirm-btn");
   const cancelBtn = modal.querySelector("button[data-key='cancel']");
 
-  function checkoutConfirm() {
+  // ====== ĐÓNG MODAL ======
+  function closeModal() {
+    overlay.style.display = "none";
+    modal.style.display = "none";
+  }
+
+  // ====== XÁC NHẬN ĐƠN HÀNG ======
+  function confirmCheckout() {
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
@@ -15,48 +21,50 @@ function initCheckoutModal() {
       return;
     }
 
-    const zaloNumber = "0766786494";
-    const message = `🛍️ Đơn hàng mới:\n👤 Họ tên: ${name}\n📞 SĐT: ${phone}\n🏠 Địa chỉ: ${address}`;
-    const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodeURIComponent(message)}`;
+    // ====== TẠO NỘI DUNG ĐƠN HÀNG ======
+    let orderText = "🛒 ĐƠN HÀNG MỚI\n\n";
+    orderText += `👤 Khách hàng: ${name}\n`;
+    orderText += `📞 SĐT: ${phone}\n`;
+    orderText += `🏠 Địa chỉ: ${address}\n\n`;
+    orderText += "📦 SẢN PHẨM:\n";
+
+    let total = 0;
+
+    Object.keys(cart).forEach(id => {
+      const p = products.find(x => x.id == id);
+      const qty = cart[id];
+      const price = p.price * qty;
+      total += price;
+
+      orderText += `- ${productTranslations[currentLang][p.id].title}\n`;
+      orderText += `  SL: ${qty} | ${price.toLocaleString()}₫\n`;
+    });
+
+    orderText += `\n💰 TỔNG TIỀN: ${total.toLocaleString()}₫`;
+
+    // ====== GỬI QUA ZALO ======
+    const zaloNumber = "0766786494"; // 👉 số của bạn
+    const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodeURIComponent(orderText)}`;
     window.open(zaloUrl, "_blank");
 
-    closeCheckoutModal();
+    // ====== RESET ======
     clearCart();
+    closeModal();
   }
 
-  function closeCheckoutModal() {
-    overlay.style.display = "none";
-    modal.style.display = "none";
-  }
-
-  overlay.addEventListener("click", closeCheckoutModal);
-  cancelBtn.addEventListener("click", closeCheckoutModal);
-  confirmBtn.addEventListener("click", checkoutConfirm);
+  // ====== EVENTS ======
+  overlay.addEventListener("click", closeModal);
+  cancelBtn.addEventListener("click", closeModal);
+  confirmBtn.addEventListener("click", confirmCheckout);
 }
 
-// function openCheckout() {
-//   if (Object.keys(cart).length === 0) {
-//     alert("Giỏ hàng trống!");
-//     return;
-//   }
-//   document.getElementById("checkout-overlay").style.display = "block";
-//   document.getElementById("checkout-modal").style.display = "block";
-// }
-
-// Hàm mở modal thông báo khi bấm "Mua hàng"
+// ====== MỞ MODAL ======
 function openCheckout() {
-  // Ẩn giỏ hàng
-  cartSection.style.display = 'none';
+  if (Object.keys(cart).length === 0) {
+    alert("🛒 Giỏ hàng đang trống!");
+    return;
+  }
 
-  // Hiển thị modal thông báo
-  document.getElementById('checkout-overlay').style.display = 'flex';
-}
-
-// Hàm đóng modal thông báo
-function closeCheckout() {
-  // Ẩn modal
-  document.getElementById('checkout-overlay').style.display = 'none';
-
-  // Hiển thị lại giỏ hàng (nếu cần)
-  cartSection.style.display = 'block';
+  document.getElementById("checkout-overlay").style.display = "block";
+  document.getElementById("checkout-modal").style.display = "block";
 }
