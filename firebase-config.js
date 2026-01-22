@@ -1,6 +1,10 @@
 // ===== Cấu hình Firebase =====
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { 
+  getDatabase,
+  ref,
+  push
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDehc_TiOR7YkYu1vHUb97L7rrjSkJWRIc",
@@ -19,3 +23,7 @@ const db = getDatabase(app);
 
 // Gắn db ra window để chat-web.js dùng
 window.db = db;
+
+// 👇 THÊM
+window.firebaseRef = ref;
+window.firebasePush = push;

@@ -166,6 +166,25 @@
         <span onclick="addEmoji('😅')">😅</span>
         <span onclick="addEmoji('😉')">😉</span>
         <span onclick="addEmoji('😊')">😊</span>
+        <span onclick="addEmoji('😋')">😋</span>
+        <span onclick="addEmoji('😎')">😎</span>
+        <span onclick="addEmoji('😍')">😍</span>
+        <span onclick="addEmoji('🥰')">🥰</span>
+        <span onclick="addEmoji('😘')">😘</span>
+        <span onclick="addEmoji('😗')">😗</span>
+        <span onclick="addEmoji('🤗')">🤗</span>
+        <span onclick="addEmoji('🙃')">🙃</span>
+        <span onclick="addEmoji('😫')">😫</span>
+        <span onclick="addEmoji('😴')">😴</span>
+        <span onclick="addEmoji('😤')">😤</span>
+        <span onclick="addEmoji('😭')">😭</span>
+        <span onclick="addEmoji('😇')">😇</span>
+        <span onclick="addEmoji('🤡')">🤡</span>
+        <span onclick="addEmoji('😓')">😓</span>
+        <span onclick="addEmoji('🤫')">🤫</span>
+        <span onclick="addEmoji('😈')">😈</span>
+        <span onclick="addEmoji('👍')">👍</span>
+        <span onclick="addEmoji('👌')">👌</span>
       </div>
 
       <!-- TAB CONTENT: Animals -->
@@ -178,6 +197,12 @@
         <span onclick="addEmoji('🦊')">🦊</span>
         <span onclick="addEmoji('🐻')">🐻</span>
         <span onclick="addEmoji('🐼')">🐼</span>
+        <span onclick="addEmoji('🙈')">🙈</span>
+        <span onclick="addEmoji('🙉')">🙉</span>
+        <span onclick="addEmoji('🙊')">🙊</span>
+        <span onclick="addEmoji('🐔')">🐔</span>
+        <span onclick="addEmoji('🦆')">🦆</span>
+        <span onclick="addEmoji('🐍')">🐍</span>
       </div>
 
       <!-- TAB CONTENT: Food -->
@@ -189,6 +214,20 @@
         <span onclick="addEmoji('🍋')">🍋</span>
         <span onclick="addEmoji('🍉')">🍉</span>
         <span onclick="addEmoji('🍇')">🍇</span>
+        <span onclick="addEmoji('🥖')">🥖</span>
+        <span onclick="addEmoji('🥚')">🥚</span>
+        <span onclick="addEmoji('🍔')">🍔</span>
+        <span onclick="addEmoji('🎂')">🎂</span>
+        <span onclick="addEmoji('🧁')">🧁</span>
+        <span onclick="addEmoji('🍪')">🍪</span>
+        <span onclick="addEmoji('🍵')">🍵</span>
+        <span onclick="addEmoji('🍭')">🍭</span>
+        <span onclick="addEmoji('🍷')">🍷</span>
+        <span onclick="addEmoji('🍹')">🍹</span>
+        <span onclick="addEmoji('🍒')">🍒</span>
+        <span onclick="addEmoji('🥑')">🥑</span>
+        <span onclick="addEmoji('🥝')">🥝</span>
+        <span onclick="addEmoji('🌶️')">🌶️</span>
       </div>
 
       <!-- TAB CONTENT: Travel -->
@@ -199,6 +238,17 @@
         <span onclick="addEmoji('🚌')">🚌</span>
         <span onclick="addEmoji('🏠')">🏠</span>
         <span onclick="addEmoji('🏫')">🏫</span>
+        <span onclick="addEmoji('✈️')">✈️</span>
+        <span onclick="addEmoji('🛸')">🛸</span>
+        <span onclick="addEmoji('🚢')">🚢</span>
+        <span onclick="addEmoji('⚓')">⚓</span>
+        <span onclick="addEmoji('🗼')">🗼</span>
+        <span onclick="addEmoji('🏖️')">🏖️</span>
+        <span onclick="addEmoji('⛺')">⛺</span>
+        <span onclick="addEmoji('🌋')">🌋</span>
+        <span onclick="addEmoji('🏥')">🏥</span>
+        <span onclick="addEmoji('🏔️')">🏔️</span>
+        <span onclick="addEmoji('🚦')">🚦</span>
       </div>
 
       <!-- TAB CONTENT: Symbols -->
@@ -209,6 +259,14 @@
         <span onclick="addEmoji('⭐')">⭐</span>
         <span onclick="addEmoji('🔥')">🔥</span>
         <span onclick="addEmoji('💯')">💯</span>
+        <span onclick="addEmoji('💔')">💔</span>
+        <span onclick="addEmoji('💘')">💘</span>
+        <span onclick="addEmoji('✔️')">✔️</span>
+        <span onclick="addEmoji('🔑')">🔑</span>
+        <span onclick="addEmoji('🔒')">🔒</span>
+        <span onclick="addEmoji('🔓')">🔓</span>
+        <span onclick="addEmoji('❌')">❌</span>
+        <span onclick="addEmoji('❓')">❓</span>
       </div>
 
     </div><!-- END EMOJI PANEL -->
@@ -249,5 +307,34 @@
 
 </div>
   
+<!-- OVERLAY -->
+<div id="checkout-overlay"></div>
+
+<div id="checkout-modal" class="checkout-modal">
+  <h3>THÔNG TIN GIAO HÀNG</h3>
+
+  <label>Họ tên</label>
+  <input type="text" id="name" placeholder="VD: Nguyễn Văn A">
+
+  <label>Số điện thoại</label>
+  <input
+    type="tel"
+    id="phone"
+    maxlength="10"
+    inputmode="numeric"
+    placeholder="VD: 0766786494"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+  >
+
+  <label>Địa chỉ</label>
+  <textarea
+    id="address"
+    placeholder="VD: 123 Lê Văn Việt, P. Hiệp Phú, TP. Thủ Đức, TP.HCM"
+  ></textarea>
+
+  <button id="checkout-confirm-btn">Xác nhận</button>
+  <button data-key="cancel">Hủy</button>
+</div>
+ 
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Quản lý đơn hàng</title>
+  <style>
+    body { font-family: Arial; background:#f5f5f5; padding:20px }
+    .order { background:#fff; border:1px solid #ccc; border-radius:8px; padding:12px; margin-bottom:12px }
+    .order ul { padding-left:18px }
+    .total { color:#e53935; font-weight:bold }
+    .topbar { background:#1e3d7b; color:white; padding:10px; margin-bottom:15px; border-radius:8px }
+    button { cursor:pointer }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox">
+  <h2>🔐 Đăng nhập Admin</h2>
+  <input type="password" id="adminPass" placeholder="Nhập mật khẩu">
+  <button onclick="login()">Đăng nhập</button>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPanel" style="display:none">
+  <div class="topbar">
+    📊 Doanh thu hôm nay: <b id="todayTotal">0₫</b> |
+    📅 Tháng này: <b id="monthTotal">0₫</b>
+    <button style="float:right" onclick="logout()">Đăng xuất</button>
+  </div>
+
+  <h2>📦 Danh sách đơn hàng</h2>
+  <div id="orders"></div>
+</div>
+
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="admin.js"></script>
+</body>
+</html>
