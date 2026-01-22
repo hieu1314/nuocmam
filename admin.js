@@ -6,7 +6,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 /* ========== LOGIN ========== */
-const ADMIN_PASSWORD = "123456"; // 🔴 ĐỔI MẬT KHẨU Ở ĐÂY
+const ADMIN_PASSWORD = "22122022"; // 🔴 ĐỔI MẬT KHẨU Ở ĐÂY
 
 window.login = function () {
   const pass = document.getElementById("adminPass").value;

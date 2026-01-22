@@ -570,3 +570,9 @@ background: rgba(255, 200, 200, 0.9); /* đỏ nhạt */
 #footer strong {
   color: #ffd700; /* vàng nhẹ – sang */
 }
+
+.sold-out {
+  color: #e53935;      /* đỏ */
+  font-weight: bold;
+  margin-left: 6px;
+}

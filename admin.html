@@ -12,6 +12,22 @@
     button { cursor:pointer }
   </style>
 </head>
+
+<script>
+  const ADMIN_PASS = "584ADMIN"; // 👈 đổi mật khẩu
+
+  const entered = sessionStorage.getItem("adminOK");
+  if (!entered) {
+    const pass = prompt("🔐 Nhập mật khẩu admin:");
+    if (pass === ADMIN_PASS) {
+      sessionStorage.setItem("adminOK", "yes");
+    } else {
+      alert("❌ Sai mật khẩu!");
+      location.href = "/";
+    }
+  }
+</script>
+
 <body>
 
 <!-- LOGIN -->
