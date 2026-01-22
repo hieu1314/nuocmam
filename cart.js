@@ -86,10 +86,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("cart-close");
 
   // MỞ GIỎ → ẨN NÚT TRÒN
-  toggle.addEventListener("click", () => {
-    panel.classList.add("open");
-    toggle.style.display = "none";
-  });
+toggle.addEventListener("click", () => {
+  if (window.innerWidth <= 768) {
+    const rect = toggle.getBoundingClientRect();
+
+    // origin = tâm nút tròn
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height / 2;
+
+    panel.style.transformOrigin = `${originX}px ${originY}px`;
+  }
+
+  panel.classList.add("open");
+  toggle.style.display = "none";
+});
+
 
   // ĐÓNG GIỎ → HIỆN NÚT TRÒN
 function closeCart() {
@@ -98,7 +109,7 @@ function closeCart() {
   // đợi animation đóng xong (0.5s) mới hiện nút tròn
   setTimeout(() => {
     toggle.style.display = "flex";
-  }, 500);
+  }, 350);
 }
 
   title.addEventListener("click", closeCart);
