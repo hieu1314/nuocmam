@@ -3,54 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin – Quản lý đơn hàng</title>
-  <style>
-    body { font-family: Arial; background:#f5f5f5; padding:20px }
-    .order { background:#fff; border:1px solid #ccc; border-radius:8px; padding:12px; margin-bottom:12px }
-    .order ul { padding-left:18px }
-    .total { color:#e53935; font-weight:bold }
-    .topbar { background:#1e3d7b; color:white; padding:10px; margin-bottom:15px; border-radius:8px }
-    button { cursor:pointer }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+
 </head>
-
-<script>
-  const ADMIN_PASS = "584ADMIN"; // 👈 đổi mật khẩu
-
-  const entered = sessionStorage.getItem("adminOK");
-  if (!entered) {
-    const pass = prompt("🔐 Nhập mật khẩu admin:");
-    if (pass === ADMIN_PASS) {
-      sessionStorage.setItem("adminOK", "yes");
-    } else {
-      alert("❌ Sai mật khẩu!");
-      location.href = "/";
-    }
-  }
-</script>
 
 <body>
 
 <!-- LOGIN -->
 <div id="loginBox">
-  <h2>🔐 Đăng nhập Admin</h2>
-  <input type="password" id="adminPass" placeholder="Nhập mật khẩu">
+  <h2>🔐 Admin Login</h2>
+  <input type="password" id="adminPass" placeholder="Nhập mật khẩu admin">
   <button onclick="login()">Đăng nhập</button>
 </div>
 
 <!-- ADMIN -->
-<div id="adminPanel" style="display:none">
-  <div class="topbar">
-    📊 Doanh thu hôm nay: <b id="todayTotal">0₫</b> |
+<div id="adminPanel">
+  <div class="admin-container">
+
+<div class="topbar">
+  <div class="stats">
+    📊 Hôm nay: <b id="todayTotal">0₫</b> |
     📅 Tháng này: <b id="monthTotal">0₫</b>
-    <button style="float:right" onclick="logout()">Đăng xuất</button>
   </div>
 
-  <h2>📦 Danh sách đơn hàng</h2>
-  <div id="orders"></div>
+  <!-- MENU ⋮ -->
+  <div class="menu-wrap">
+    <button class="icon-btn" onclick="toggleMenu()">⋮</button>
+
+    <div id="adminMenu" class="menu hidden">
+      <div class="menu-item" onclick="openTrash()">🗑 Thùng rác</div>
+      <div class="menu-item danger" onclick="logout()">🚪 Đăng xuất</div>
+    </div>
+  </div>
 </div>
 
+  <!-- FILTER -->
+<div class="filter-box">
+  <div class="date-row">
+    📅
+    <input type="date" id="fromDate">
+    ➝
+    <input type="date" id="toDate">
+  </div>
+
+  <div class="action-row">
+    <button class="btn primary" onclick="filterOrders()">Lọc</button>
+    <button class="btn secondary" onclick="clearFilter()">Tất cả</button>
+    <button class="btn excel" onclick="exportExcel()">📤 Excel</button>
+  </div>
+</div>
+
+  <!-- ORDERS -->
+  <div id="orders"></div>
+
+</div>
+</div>
+
+<div id="trashModal" class="modal hidden">
+  <div class="modal-box">
+    <h3>🗑 Đơn đã xoá (Backup)</h3>
+    <div id="trashList"></div>
+    <button class="btn secondary" onclick="closeTrash()">Đóng</button>
+  </div>
+</div>
+
+<!-- LIBS -->
 <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
 <script src="firebase-config.js"></script>
 <script src="admin.js"></script>
 
