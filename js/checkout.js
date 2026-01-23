@@ -93,7 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .ref("orders_backup/" + monthKey + "/" + orderRef.key)
         .set(orderData);
 
-      alert("✅ Đặt hàng thành công!");
+        alert(
+        "✅ Đặt hàng thành công!\n\n" +
+        "Chúng tôi sẽ liên hệ với bạn sau nhé.\n" +
+        "👉 Nhớ xem tin nhắn hoặc nghe điện thoại nha 📞"
+      );
 
       clearCart();
       closeCheckout();
