@@ -1,4 +1,4 @@
-// checkout.js — Firebase COMPAT — FINAL
+// checkout.js — Firebase COMPAT — FINAL + AUTO BACKUP
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmBtn = document.getElementById("checkout-confirm-btn");
   const cancelBtn = modal.querySelector("button[data-key='cancel']");
 
+  // ================== OPEN MODAL ==================
   function openCheckout() {
     if (!window.cart || Object.keys(window.cart).length === 0) {
       alert("🛒 Giỏ hàng đang trống!");
@@ -17,12 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.style.display = "block";
   }
 
+  // ================== CLOSE MODAL ==================
   function closeCheckout() {
     overlay.style.display = "none";
     modal.style.display = "none";
-    name.value = phone.value = address.value = "";
+
+    // clear form
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("address").value = "";
   }
 
+  // ================== CONFIRM ==================
   async function confirmCheckout(e) {
     e.preventDefault();
 
@@ -61,6 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
+    if (items.length === 0) {
+      alert("❌ Giỏ hàng lỗi");
+      return;
+    }
+
     const orderData = {
       customer: { name, phone, address },
       items,
@@ -70,21 +82,36 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      await window.db.ref("orders").push(orderData);
+      // ====== LƯU ĐƠN CHÍNH ======
+      const orderRef = window.db.ref("orders").push();
+      await orderRef.set(orderData);
+
+      // ====== BACKUP TỰ ĐỘNG ======
+      const monthKey = new Date().toISOString().slice(0, 7); // vd: 2026-01
+
+      await window.db
+        .ref("orders_backup/" + monthKey + "/" + orderRef.key)
+        .set(orderData);
+
       alert("✅ Đặt hàng thành công!");
+
       clearCart();
       closeCheckout();
+
     } catch (err) {
       console.error("🔥 Firebase error:", err);
-      alert("❌ Permission denied – kiểm tra Rules!");
+      alert("❌ Không gửi được đơn – kiểm tra Firebase Rules!");
     }
   }
 
+  // ================== EVENTS ==================
   checkoutBtn.onclick = openCheckout;
   confirmBtn.onclick = confirmCheckout;
+
   cancelBtn.onclick = e => {
     e.preventDefault();
     closeCheckout();
   };
+
   overlay.onclick = closeCheckout;
 });
