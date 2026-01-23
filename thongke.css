@@ -1,0 +1,74 @@
+/* ================= STATS PANEL ================= */
+#stats-toggle {
+  position: absolute;
+  top: 50%;
+  right: -32px;
+  transform: translateY(-50%);
+
+  width: 32px;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.25);
+  user-select: none;
+}
+
+#stats-toggle.open {
+  left: 250px; /* LUÔN SÁT PANEL */
+}
+
+#stats-panel {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translate(-100%, -50%);
+  width: 250px;
+  background: #fff;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.25);
+  padding: 12px 14px;
+  font-size: 14px;
+  z-index: 9997;
+
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#stats-panel.open {
+  transform: translate(0, -50%);
+}
+
+#stats-panel h3 {
+  margin-top: 0;
+  font-size: 15px;
+  color: #1e3d7b;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+#stats-panel p {
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+#stats-panel span {
+  font-weight: bold;
+  color: #333;
+}
+
+#stats-panel.open {
+  left: 0;
+}
+
+#stats-toggle.open {
+  left: 250px;
+}

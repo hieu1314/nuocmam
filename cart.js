@@ -1,5 +1,5 @@
 // =================== CART STATE ===================
-let cart = {};
+window.cart = {};
 
 // =================== ADD / REMOVE ===================
 function addToCart(id) {
