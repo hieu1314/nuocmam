@@ -1,70 +1,90 @@
-function initCheckoutModal() {
+// checkout.js — Firebase COMPAT — FINAL
+
+document.addEventListener("DOMContentLoaded", () => {
+
   const overlay = document.getElementById("checkout-overlay");
   const modal = document.getElementById("checkout-modal");
+  const checkoutBtn = document.getElementById("checkout-btn");
   const confirmBtn = document.getElementById("checkout-confirm-btn");
   const cancelBtn = modal.querySelector("button[data-key='cancel']");
 
-  // ====== ĐÓNG MODAL ======
-  function closeModal() {
-    overlay.style.display = "none";
-    modal.style.display = "none";
+  function openCheckout() {
+    if (!window.cart || Object.keys(window.cart).length === 0) {
+      alert("🛒 Giỏ hàng đang trống!");
+      return;
+    }
+    overlay.style.display = "flex";
+    modal.style.display = "block";
   }
 
-  // ====== XÁC NHẬN ĐƠN HÀNG ======
-  function confirmCheckout() {
+  function closeCheckout() {
+    overlay.style.display = "none";
+    modal.style.display = "none";
+    name.value = phone.value = address.value = "";
+  }
+
+  async function confirmCheckout(e) {
+    e.preventDefault();
+
+    if (!window.db) {
+      alert("❌ Firebase chưa sẵn sàng");
+      return;
+    }
+
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const address = document.getElementById("address").value.trim();
 
     if (!name || !phone || !address) {
-      alert("⚠️ Vui lòng nhập đầy đủ thông tin giao hàng!");
+      alert("⚠️ Nhập đầy đủ thông tin!");
       return;
     }
 
-    // ====== TẠO NỘI DUNG ĐƠN HÀNG ======
-    let orderText = "🛒 ĐƠN HÀNG MỚI\n\n";
-    orderText += `👤 Khách hàng: ${name}\n`;
-    orderText += `📞 SĐT: ${phone}\n`;
-    orderText += `🏠 Địa chỉ: ${address}\n\n`;
-    orderText += "📦 SẢN PHẨM:\n";
-
     let total = 0;
+    const items = [];
 
-    Object.keys(cart).forEach(id => {
+    for (const id in window.cart) {
+      const qty = window.cart[id];
       const p = products.find(x => x.id == id);
-      const qty = cart[id];
-      const price = p.price * qty;
-      total += price;
+      if (!p) continue;
 
-      orderText += `- ${productTranslations[currentLang][p.id].title}\n`;
-      orderText += `  SL: ${qty} | ${price.toLocaleString()}₫\n`;
-    });
+      const title =
+        productTranslations[currentLang]?.[id]?.title || "Sản phẩm";
 
-    orderText += `\n💰 TỔNG TIỀN: ${total.toLocaleString()}₫`;
+      total += p.price * qty;
 
-    // ====== GỬI QUA ZALO ======
-    const zaloNumber = "0766786494"; // 👉 số của bạn
-    const zaloUrl = `https://zalo.me/${zaloNumber}?text=${encodeURIComponent(orderText)}`;
-    window.open(zaloUrl, "_blank");
+      items.push({
+        productId: p.id,
+        title,
+        quantity: qty,
+        price: p.price
+      });
+    }
 
-    // ====== RESET ======
-    clearCart();
-    closeModal();
+    const orderData = {
+      customer: { name, phone, address },
+      items,
+      total,
+      status: "new",
+      createdAt: Date.now()
+    };
+
+    try {
+      await window.db.ref("orders").push(orderData);
+      alert("✅ Đặt hàng thành công!");
+      clearCart();
+      closeCheckout();
+    } catch (err) {
+      console.error("🔥 Firebase error:", err);
+      alert("❌ Permission denied – kiểm tra Rules!");
+    }
   }
 
-  // ====== EVENTS ======
-  overlay.addEventListener("click", closeModal);
-  cancelBtn.addEventListener("click", closeModal);
-  confirmBtn.addEventListener("click", confirmCheckout);
-}
-
-// ====== MỞ MODAL ======
-function openCheckout() {
-  if (Object.keys(cart).length === 0) {
-    alert("🛒 Giỏ hàng đang trống!");
-    return;
-  }
-
-  document.getElementById("checkout-overlay").style.display = "block";
-  document.getElementById("checkout-modal").style.display = "block";
-}
+  checkoutBtn.onclick = openCheckout;
+  confirmBtn.onclick = confirmCheckout;
+  cancelBtn.onclick = e => {
+    e.preventDefault();
+    closeCheckout();
+  };
+  overlay.onclick = closeCheckout;
+});
