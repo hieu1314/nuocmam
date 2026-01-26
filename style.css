@@ -330,10 +330,9 @@ header nav {
    MOBILE (NON-PRODUCT)
 ================================ */
 @media (max-width: 768px) {
-  h1[data-key="title"] {
-    font-size: 1.2em;
+  header h1[data-key="title"] {
+    font-size: 20px;
   }
-
   header nav {
     gap: 12px;
     flex-wrap: wrap;
