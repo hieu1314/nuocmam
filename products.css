@@ -24,26 +24,79 @@
 }
 
 /* ================================
-   PRODUCT CARD
+   PRODUCT CARD (BASE + ANIMATION)
 ================================ */
 .product-card {
+  /* layout */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #fff;
-  border: 1px solid #eee;
+  text-align: center;
+
+  /* visual */
+  background: rgba(255,255,255,0.92); /* glass nhẹ */
+  border: 1px solid #eeeeee;
   border-radius: 12px;
   padding: 12px;
-  text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: 0.2s;
+
+  /* animation setup */
+  opacity: 0;
+  overflow: hidden;
   position: relative;
   z-index: 2;
+
+  animation: fadeIn 0.7s ease forwards;
+  animation-delay: var(--delay, 0s);
+  will-change: opacity;
+
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .product-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ================================
+   SHIMMER LIGHT SWEEP
+================================ */
+.product-card::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,0.45),
+    transparent 65%
+  );
+
+  transform: translateX(-120%) rotate(20deg);
+  animation: lightSweep 3.5s linear infinite;
+  animation-delay: calc(var(--delay, 0s) + 0.3s);
+
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: overlay;
+}
+
+/* ================================
+   KEYFRAMES
+================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lightSweep {
+  from {
+    transform: translateX(-120%) rotate(20deg);
+  }
+  to {
+    transform: translateX(120%) rotate(20deg);
+  }
 }
 
 /* ================================
@@ -172,4 +225,3 @@
   background: #aaa;
   cursor: not-allowed;
 }
-
