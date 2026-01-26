@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Giới thiệu - Nước Mắm 584</title>
   <link rel="stylesheet" href="style.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background: #fffdf9;
       color: #333;
       line-height: 1.6;
     }
 
     header {
-      background: #c0392b;
       color: white;
       text-align: center;
       padding: 15px 0;
@@ -61,6 +60,39 @@
     a.back-home:hover {
       text-decoration: underline;
     }
+     .intro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    margin-top: 20px;
+     align-items: stretch;
+  }
+  .intro-images {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+.intro-images img {
+  width: 100%;
+  aspect-ratio: 4 / 3;        /* Tỉ lệ đẹp, đồng đều */
+  object-fit: cover;         /* Không méo hình */
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+@media (max-width: 768px) {
+  .intro-images {
+    grid-auto-flow: column;
+    grid-auto-columns: 80%;
+    overflow-x: auto;
+  }
+}
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+    }
+  }
   </style>
 </head>
 <body>
@@ -71,8 +103,21 @@
 
   <main>
     <a href="index.html" class="back-home">← Quay lại trang chủ</a>
+
     <h2>🐟 Hương vị truyền thống Việt Nam </h2>
-    <pre id="readme-content">Đang tải nội dung giới thiệu...</pre>
+
+      <div class="intro-grid">
+      <pre id="readme-content">Đang tải nội dung giới thiệu...</pre>
+
+      <div class="intro-images">
+      <img src="images/nhatrang.jpg" alt="Biển Nha Trang">
+      <img src="images/gt2.jpg" alt="Phòng thí nghiệm và kiểm soát chất lượng">
+      <img src="images/gt1.jpg" alt="Sản phẩm tiêu biểu của 584">
+      <img src="images/gt3.jpg" alt="Chứng nhận chất lượng">
+      <img src="images/gt4.jpg" alt="Xưởng sản xuất">
+      <img src="images/gt5.jpg" alt="Nguyên liệu đầu vào">
+      <img src="images/gt6.jpg" alt="Hầm ủ cá cơm">
+    </div>
   </main>
 
 <footer id="footer">
