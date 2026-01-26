@@ -32,21 +32,32 @@ function clearCart() {
 function renderCart() {
   const container = document.getElementById("cart-items");
   const totalEl = document.getElementById("cart-total");
+  const discountEl = document.getElementById("cart-discount");
   const ids = Object.keys(cart);
 
-  if (ids.length === 0) {
-    container.innerHTML = `<p>${translations[currentLang].cart_empty}</p>`;
-    totalEl.textContent = "0₫";
-    return;
-  }
+if (ids.length === 0) {
+  container.innerHTML = `<p>${translations[currentLang].cart_empty}</p>`;
+  totalEl.textContent = "0₫";
+  discountEl.textContent =
+    "(Chiết khấu 10% cho mỗi 6 chai cùng loại: 0₫)";
+  return;
+}
 
-  let total = 0;
+  let total = 0;          // tổng gốc
+  let totalDiscount = 0;  // tổng chiết khấu
 
   container.innerHTML = ids.map(id => {
     const p = products.find(x => x.id == id);
     const qty = cart[id];
     const title = productTranslations[currentLang][p.id].title;
+
+    // ===== CHIẾT KHẤU 6 CHAI =====
+    const discountGroups = Math.floor(qty / 6);
+    const discountQty = discountGroups * 6;
+    const discountAmount = discountQty * p.price * 0.1;
+
     total += p.price * qty;
+    totalDiscount += discountAmount;
 
     return `
       <div class="cart-item">
@@ -64,7 +75,13 @@ function renderCart() {
     `;
   }).join("");
 
-  totalEl.textContent = total.toLocaleString() + "₫";
+  const finalTotal = total - totalDiscount;
+
+  discountEl.textContent =
+  `(Chiết khấu 10% cho mỗi 6 chai cùng loại: ${totalDiscount.toLocaleString()}₫)`;
+
+  totalEl.textContent =
+  finalTotal.toLocaleString() + "₫";
 }
 
 // =================== BADGE ===================
@@ -85,34 +102,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById("cart-title");
   const closeBtn = document.getElementById("cart-close");
 
-  // MỞ GIỎ → ẨN NÚT TRÒN
-toggle.addEventListener("click", () => {
-  if (window.innerWidth <= 768) {
-    const rect = toggle.getBoundingClientRect();
+  toggle.addEventListener("click", () => {
+    if (window.innerWidth <= 768) {
+      const rect = toggle.getBoundingClientRect();
+      panel.style.transformOrigin =
+        `${rect.left + rect.width / 2}px ${rect.top + rect.height / 2}px`;
+    }
 
-    // origin = tâm nút tròn
-    const originX = rect.left + rect.width / 2;
-    const originY = rect.top + rect.height / 2;
+    panel.classList.add("open");
+    toggle.style.display = "none";
+  });
 
-    panel.style.transformOrigin = `${originX}px ${originY}px`;
+  function closeCart() {
+    panel.classList.remove("open");
+    setTimeout(() => {
+      toggle.style.display = "flex";
+    }, 350);
   }
-
-  panel.classList.add("open");
-  toggle.style.display = "none";
-});
-
-
-  // ĐÓNG GIỎ → HIỆN NÚT TRÒN
-function closeCart() {
-  panel.classList.remove("open");
-
-  // đợi animation đóng xong (0.5s) mới hiện nút tròn
-  setTimeout(() => {
-    toggle.style.display = "flex";
-  }, 350);
-}
 
   title.addEventListener("click", closeCart);
   closeBtn.addEventListener("click", closeCart);
 });
-

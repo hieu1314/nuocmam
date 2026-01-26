@@ -213,7 +213,7 @@ header nav {
   inset: 0;
   background: rgba(0,0,0,0.6);
   display: none;
-  z-index: 999;
+  z-index: 9998;
 }
 
 .checkout-modal {
@@ -227,7 +227,7 @@ header nav {
   max-width: 400px;
   border-radius: 10px;
   display: none;
-  z-index: 1000;
+  z-index: 9999;
 }
 
 .checkout-modal h3 {
