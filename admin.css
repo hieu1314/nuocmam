@@ -195,3 +195,25 @@
     max-height: 65vh;
   }
 }
+
+/* ===== DATE INPUT - MOBILE FRIENDLY ===== */
+input[type="date"] {
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Mobile tối ưu hơn */
+@media (max-width:600px) {
+  .date-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  input[type="date"] {
+    width: 100%;
+    font-size: 16px;       /* iOS sẽ không zoom */
+    padding: 10px 12px;
+  }
+}

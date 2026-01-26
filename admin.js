@@ -23,7 +23,11 @@ window.logout = function () {
   location.reload();
 };
 
-if (sessionStorage.getItem("admin") === "1") showAdmin();
+if (sessionStorage.getItem("admin") === "1") {
+  showAdmin();
+} else {
+  document.getElementById("adminPanel").style.display = "none";
+}
 
 /* ================= DATA ================= */
 const ordersDiv = document.getElementById("orders");
@@ -41,6 +45,11 @@ const statusColor = {
 
 /* ================= LOAD ================= */
 ordersRef.on("value", snap => {
+  if (sessionStorage.getItem("admin") !== "1") {
+    ordersDiv.innerHTML = "";
+    return;
+  }
+
   const data = snap.val();
   if (!data) {
     ordersDiv.innerHTML = "";
