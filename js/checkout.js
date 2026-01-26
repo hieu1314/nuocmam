@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.style.display = "none";
     modal.style.display = "none";
 
-    // clear form
     document.getElementById("name").value = "";
     document.getElementById("phone").value = "";
     document.getElementById("address").value = "";
@@ -47,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    let total = 0;
+    let total = 0;          // tổng gốc
+    let totalDiscount = 0;  // tổng chiết khấu
     const items = [];
 
     for (const id in window.cart) {
@@ -58,13 +58,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const title =
         productTranslations[currentLang]?.[id]?.title || "Sản phẩm";
 
+      // ===== CHIẾT KHẤU 6 CHAI =====
+      const discountGroups = Math.floor(qty / 6);
+      const discountQty = discountGroups * 6;
+      const discountAmount = discountQty * p.price * 0.1;
+
       total += p.price * qty;
+      totalDiscount += discountAmount;
 
       items.push({
         productId: p.id,
         title,
         quantity: qty,
-        price: p.price
+        price: p.price,
+        discountApplied: discountAmount
       });
     }
 
@@ -73,27 +80,27 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    const finalTotal = total - totalDiscount;
+
     const orderData = {
       customer: { name, phone, address },
       items,
-      total,
+      total: finalTotal,
+      discount: totalDiscount,
       status: "new",
       createdAt: Date.now()
     };
 
     try {
-      // ====== LƯU ĐƠN CHÍNH ======
       const orderRef = window.db.ref("orders").push();
       await orderRef.set(orderData);
 
-      // ====== BACKUP TỰ ĐỘNG ======
-      const monthKey = new Date().toISOString().slice(0, 7); // vd: 2026-01
-
+      const monthKey = new Date().toISOString().slice(0, 7);
       await window.db
         .ref("orders_backup/" + monthKey + "/" + orderRef.key)
         .set(orderData);
 
-        alert(
+      alert(
         "✅ Đặt hàng thành công!\n\n" +
         "Chúng tôi sẽ liên hệ với bạn sau nhé.\n" +
         "👉 Nhớ xem tin nhắn hoặc nghe điện thoại nha 📞"
