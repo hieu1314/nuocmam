@@ -81,4 +81,9 @@ function renderProducts(lang = currentLang) {
       <button onclick="addToCart(${p.id})" data-key="buy1">${translations[lang].buy1}</button>
     </div>
   `).join("");
+  // ✅ ANIMATE TỪNG SẢN PHẨM
+    const cards = container.querySelectorAll(".product-card");
+    cards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.4}s`;
+    });
 }
