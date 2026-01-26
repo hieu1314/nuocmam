@@ -162,3 +162,16 @@
     border-radius: 6px;
   }
 }
+/* Khóa click sản phẩm có chữ sold-out */
+.product-card:has(.sold-out) {
+  pointer-events: none;
+  position: relative;
+}
+
+.product-card:has(.sold-out)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(200, 200, 200, 0.25);
+  border-radius: 12px;
+}
