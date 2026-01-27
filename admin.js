@@ -13,6 +13,7 @@ window.login = function () {
   if (pass === ADMIN_PASSWORD) {
     sessionStorage.setItem("admin", "1");
     showAdmin();
+    renderOrders(allOrders); // ⭐ QUAN TRỌNG
   } else {
     alert("❌ Sai mật khẩu");
   }
@@ -45,19 +46,16 @@ const statusColor = {
 
 /* ================= LOAD ================= */
 ordersRef.on("value", snap => {
-  if (sessionStorage.getItem("admin") !== "1") {
-    ordersDiv.innerHTML = "";
-    return;
-  }
-
   const data = snap.val();
   if (!data) {
-    ordersDiv.innerHTML = "";
-    return;
+    allOrders = [];
+  } else {
+    allOrders = Object.entries(data).map(([id, o]) => ({ id, ...o }));
   }
 
-  allOrders = Object.entries(data).map(([id, o]) => ({ id, ...o }));
-  renderOrders(allOrders);
+  if (sessionStorage.getItem("admin") === "1") {
+    renderOrders(allOrders);
+  }
 });
 
 /* ================= RENDER ================= */
@@ -72,11 +70,21 @@ function renderOrders(orders) {
   orders.forEach(order => {
     const d = new Date(order.createdAt);
 
-    if (d.toDateString() === now.toDateString())
-      todayTotal += order.total;
+   // chỉ tính doanh thu khi DONE
+if (order.status === "done") {
 
-    if (d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear())
-      monthTotal += order.total;
+  if (d.toDateString() === now.toDateString()) {
+    todayTotal += order.total;
+  }
+
+  if (
+    d.getMonth() === now.getMonth() &&
+    d.getFullYear() === now.getFullYear()
+  ) {
+    monthTotal += order.total;
+  }
+
+}
 
     const div = document.createElement("div");
     div.className = "order";
