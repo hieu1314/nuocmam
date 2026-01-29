@@ -5,7 +5,6 @@
   <title>Admin – Quản lý đơn hàng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="admin.css">
-
 </head>
 
 <body>
@@ -13,8 +12,24 @@
 <!-- LOGIN -->
 <div id="loginBox">
   <h2>🔐 Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Nhập mật khẩu admin">
-  <button onclick="login()">Đăng nhập</button>
+
+  <input
+    type="password"
+    id="adminPass"
+    placeholder="Nhập mật khẩu admin"
+  >
+
+  <button type="button" class="creepy-btn" id="togglePassword">
+    <span class="creepy-btn_eyes">
+      <span class="creepy-btn_eye"><span class="creepy-btn_pupil"></span></span>
+      <span class="creepy-btn_eye"><span class="creepy-btn_pupil"></span></span>
+    </span>
+    <span class="creepy-btn_cover">👁</span>
+  </button>
+
+  <!-- xuống hàng -->
+  <br>
+  <button class="btn primary" onclick="login()">Đăng nhập</button>
 </div>
 
 <!-- ADMIN -->
@@ -74,7 +89,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <script src="firebase-config.js"></script>
-<script src="admin.js"></script>
+<script src="admin.js" defer></script>
 
 </body>
 </html>

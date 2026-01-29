@@ -272,3 +272,64 @@ document.addEventListener('click', function(e) {
     menu.classList.add('hidden');
   }
 });
+
+
+/* ================== CREEPY SHOW PASSWORD ================== */
+const creepyBtn = document.getElementById("togglePassword");
+const passInput = document.getElementById("adminPass");
+const pupils = creepyBtn.querySelectorAll(".creepy-btn_pupil");
+
+let showPass = false;
+
+creepyBtn.addEventListener("click", () => {
+  showPass = !showPass;
+
+  passInput.type = showPass ? "text" : "password";
+
+  // 👁 mở nắp khi show password
+  creepyBtn.classList.toggle("show", showPass);
+
+  // đổi icon
+  creepyBtn.querySelector(".creepy-btn_cover").textContent =
+    showPass ? "🙈" : "👁";
+});
+
+/* Eye tracking */
+function updateEyes(e) {
+  const event = e.touches ? e.touches[0] : e;
+
+  const rect = eyesRef.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+
+  const dx = event.clientX - centerX;
+  const dy = event.clientY - centerY;
+
+  const angle = Math.atan2(-dy, dx) + Math.PI / 2;
+  const distance = Math.hypot(dx, dy);
+
+  const x = Math.sin(angle) * distance / 180;
+  const y = Math.cos(angle) * distance / 75;
+
+  pupils.forEach(pupil => {
+    pupil.style.transform =
+      `translate(${ -50 + x * 50 }%, ${ -50 + y * 50 }%)`;
+  });
+}
+/* Eye tracking */
+creepyBtn.addEventListener("mousemove", updateEyes);
+creepyBtn.addEventListener("touchmove", updateEyes);
+
+/* Lưu pass*/
+window.login = function () {
+  const pass = document.getElementById("adminPass").value;
+
+  if (pass === ADMIN_PASSWORD) {
+    sessionStorage.setItem("admin", "1");
+    localStorage.setItem("admin_pass", pass); // ✅ LƯU PASS
+    showAdmin();
+    renderOrders(allOrders);
+  } else {
+    alert("❌ Sai mật khẩu");
+  }
+};
