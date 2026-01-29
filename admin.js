@@ -294,6 +294,15 @@ creepyBtn.addEventListener("click", () => {
     showPass ? "🙈" : "👁";
 });
 
+/* ====== AUTO OPEN WHEN FOCUS PASSWORD INPUT ====== */
+passInput.addEventListener("focus", () => {
+  if (!showPass) creepyBtn.classList.add("focus");
+});
+
+passInput.addEventListener("blur", () => {
+  creepyBtn.classList.remove("focus");
+});
+
 /* Eye tracking */
 function updateEyes(e) {
   const event = e.touches ? e.touches[0] : e;
@@ -326,10 +335,18 @@ window.login = function () {
 
   if (pass === ADMIN_PASSWORD) {
     sessionStorage.setItem("admin", "1");
-    localStorage.setItem("admin_pass", pass); // ✅ LƯU PASS
+    localStorage.setItem("admin_pass", pass);
     showAdmin();
     renderOrders(allOrders);
   } else {
-    alert("❌ Sai mật khẩu");
+    // 👁 rung mắt TRƯỚC
+    creepyBtn.classList.add("shake");
+
+    // ⏳ rung 3s rồi mới báo sai
+    setTimeout(() => {
+      creepyBtn.classList.remove("shake");
+      alert("❌ Sai mật khẩu");
+    }, 3000);
   }
 };
+
