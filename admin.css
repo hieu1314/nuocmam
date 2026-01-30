@@ -1,9 +1,39 @@
+html, body {
+  height: 100%;
+    margin: 0;
+  background: #f2f4f8;
+}
+
+body {
+  display: flex;
+  justify-content: center; /* canh giữa ngang */
+  align-items: center;     /* canh giữa dọc */
+  background: #f2f4f8;     /* tuỳ chọn */
+}
 /* ================== LAYOUT ================== */
 .admin-container {
   max-width: 420px;
   margin: 0 auto;
 }
+#loginBox {
+  width: 100%;
+  max-width: 360px;
+  margin: 40px auto 0;   /* 👈 gần top */
+  background: #fff;
+  padding: 22px 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.12);
 
+  flex-direction: column;
+  align-items: center;  /* 👈 canh giữa nội dung */
+  text-align: center;
+}
+#loginBox input,
+#loginBox .btn {
+  width: 100%;
+  max-width: 260px;
+  margin-top: 12px;
+}
 /* ================== TOPBAR ================== */
 .topbar {
   background: #1e3d7b;
@@ -288,7 +318,9 @@ input[type="date"] {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+#loginBox .creepy-btn {
+  margin: 10px auto;
+}
 /* blink */
 @keyframes eye-blink {
   0%, 92%, 100% { height: 9px; }
