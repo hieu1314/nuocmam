@@ -2,6 +2,44 @@ html, body {
   margin: 10px;
   padding: 0;
 }
+
+/* box login làm khung chứa */
+#loginBox {
+  overflow: hidden; /* 👈 QUAN TRỌNG: chữ không tràn ra ngoài */
+}
+
+.login-title {
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+
+  display: inline-block;
+
+  background: linear-gradient(
+    90deg,
+    #1e3d7b,
+    #5c6bc0,
+    #1e3d7b
+  );
+  background-size: 200% auto;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation:
+    move-side 4s ease-in-out infinite alternate,
+    shimmer-slide 3s linear infinite;
+}
+@keyframes move-side {
+  from {
+    transform: translateX(-20%);
+  }
+  to {
+    transform: translateX(20%);
+  }
+}
+
 /* ================== LAYOUT ================== */
 .admin-container {
   max-width: 420px;
@@ -26,6 +64,13 @@ html, body {
   max-width: 260px;
   margin-top: 12px;
 }
+#loginBox .btn.primary {
+  padding: 6px 12px;   /* nhỏ hơn xíu */
+  font-size: 12.5px;   /* chữ nhỏ hơn */
+  border-radius: 16px; /* bo gọn lại */
+  max-width: 100px;    /* không quá to */
+}
+
 /* ================== TOPBAR ================== */
 .topbar {
   background: #1e3d7b;
