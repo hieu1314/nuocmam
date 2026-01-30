@@ -1,14 +1,6 @@
 html, body {
-  height: 100%;
-    margin: 0;
-  background: #f2f4f8;
-}
-
-body {
-  display: flex;
-  justify-content: center; /* canh giữa ngang */
-  align-items: center;     /* canh giữa dọc */
-  background: #f2f4f8;     /* tuỳ chọn */
+  margin: 10px;
+  padding: 0;
 }
 /* ================== LAYOUT ================== */
 .admin-container {
@@ -18,10 +10,10 @@ body {
 #loginBox {
   width: 100%;
   max-width: 360px;
-  margin: 40px auto 0;   /* 👈 gần top */
+  margin: 0 auto 0;   /* 👈 gần top */
   background: #fff;
   padding: 22px 20px;
-  border-radius: 14px;
+  border-radius: 0 0 14px 14px; /* bo dưới cho đẹp */
   box-shadow: 0 8px 20px rgba(0,0,0,.12);
 
   flex-direction: column;
