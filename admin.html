@@ -11,7 +11,13 @@
 
 <!-- LOGIN -->
 <div id="loginBox">
-  <h2 class="login-title">🔐 Admin Login</h2>
+  <h2 class="login-title rainbow">
+  <span>🔐</span>
+  <span>A</span><span>d</span><span>m</span><span>i</span><span>n</span>
+  <span>&nbsp;</span>
+  <span>L</span><span>o</span><span>g</span><span>i</span><span>n</span>
+  </h2>
+
 
     <div class="password-row">
     <div class="password-wrap">
@@ -21,7 +27,7 @@
     placeholder="Nhập mật khẩu admin"
   >
   </div> 
-  
+
   <button type="button" class="creepy-btn inside" id="togglePassword">
     <span class="creepy-btn_eyes">
       <span class="creepy-btn_eye"><span class="creepy-btn_pupil"></span></span>
@@ -34,7 +40,16 @@
 
   <!-- xuống hàng -->
   <br>
-  <button class="btn primary" onclick="login()">Đăng nhập</button>
+  <div id="loginTrap">
+  <button
+    id="loginBtn"
+    class="btn primary"
+    onclick="login()"
+  >
+    Đăng nhập
+  </button>
+</div>
+
 </div>
 
 <!-- ADMIN -->

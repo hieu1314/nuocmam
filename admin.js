@@ -8,17 +8,6 @@ function showAdmin() {
   document.getElementById("adminPanel").style.display = "block";
 }
 
-window.login = function () {
-  const pass = document.getElementById("adminPass").value;
-  if (pass === ADMIN_PASSWORD) {
-    sessionStorage.setItem("admin", "1");
-    showAdmin();
-    renderOrders(allOrders); // ⭐ QUAN TRỌNG
-  } else {
-    alert("❌ Sai mật khẩu");
-  }
-};
-
 window.logout = function () {
   sessionStorage.removeItem("admin");
   location.reload();
@@ -303,6 +292,7 @@ passInput.addEventListener("blur", () => {
   creepyBtn.classList.remove("focus");
 });
 
+const eyesRef = creepyBtn.querySelector(".creepy-btn_eyes");
 /* Eye tracking */
 function updateEyes(e) {
   const event = e.touches ? e.touches[0] : e;
@@ -349,4 +339,36 @@ window.login = function () {
     }, 3000);
   }
 };
+
+const loginBtn = document.getElementById("loginBtn");
+const loginTrap = document.getElementById("loginTrap");
+
+let canLogin = false;
+
+// theo dõi input
+passInput.addEventListener("input", () => {
+  canLogin = passInput.value.trim() !== "";
+
+  if (canLogin) {
+    loginBtn.classList.remove("locked");
+    loginBtn.style.transform = "translate(0,0)";
+  } else {
+    loginBtn.classList.add("locked");
+  }
+});
+
+// mồi bắt chuột
+loginTrap.addEventListener("mousemove", (e) => {
+  if (canLogin) return;
+
+  const rect = loginTrap.getBoundingClientRect();
+  const dx = e.clientX - (rect.left + rect.width / 2);
+  const dy = e.clientY - (rect.top + rect.height / 2);
+
+  const x = -dx * 0.6;
+  const y = -dy * 0.6;
+
+  loginBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
 

@@ -9,29 +9,42 @@ html, body {
 }
 
 .login-title {
-  white-space: nowrap;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 16px;
-
+  white-space: nowrap;
   display: inline-block;
 
-  background: linear-gradient(
-    90deg,
-    #1e3d7b,
-    #5c6bc0,
-    #1e3d7b
-  );
-  background-size: 200% auto;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  animation:
-    move-side 4s ease-in-out infinite alternate,
-    shimmer-slide 3s linear infinite;
+  animation: slide-side 4s ease-in-out infinite alternate;
 }
-@keyframes move-side {
+
+/* mỗi chữ */
+.login-title span {
+  display: inline-block;
+  animation: color-cycle 2.5s linear infinite;
+}
+
+/* tạo lệch thời gian cho từng chữ */
+.login-title span:nth-child(1)  { animation-delay: 0s; }
+.login-title span:nth-child(2)  { animation-delay: .1s; }
+.login-title span:nth-child(3)  { animation-delay: .2s; }
+.login-title span:nth-child(4)  { animation-delay: .3s; }
+.login-title span:nth-child(5)  { animation-delay: .4s; }
+.login-title span:nth-child(6)  { animation-delay: .5s; }
+.login-title span:nth-child(7)  { animation-delay: .6s; }
+.login-title span:nth-child(8)  { animation-delay: .7s; }
+.login-title span:nth-child(9)  { animation-delay: .8s; }
+.login-title span:nth-child(10) { animation-delay: .9s; }
+.login-title span:nth-child(11) { animation-delay: 1s; }
+
+@keyframes color-cycle {
+  0%   { color: #1e3d7b; }
+  25%  { color: #5c6bc0; }
+  50%  { color: #00c853; }
+  75%  { color: #ff4081; }
+  100% { color: #1e3d7b; }
+}
+@keyframes slide-side {
   from {
     transform: translateX(-20%);
   }
@@ -39,7 +52,6 @@ html, body {
     transform: translateX(20%);
   }
 }
-
 /* ================== LAYOUT ================== */
 .admin-container {
   max-width: 420px;
@@ -456,4 +468,19 @@ input[type="date"] {
 /* mắt rung theo */
 .creepy-btn.shake .creepy-btn_pupil {
   animation: creepy-shake 0.35s;
+}
+/* đăng nhập chạy */
+#loginTrap {
+  display: inline-block;
+  position: relative;
+}
+
+#loginBtn {
+  position: relative;
+  transition: transform 0.18s ease;
+}
+
+/* khi bị khoá */
+#loginBtn.locked {
+  pointer-events: none;
 }
