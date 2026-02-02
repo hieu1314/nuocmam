@@ -39,7 +39,22 @@ ordersRef.on("value", snap => {
   if (!data) {
     allOrders = [];
   } else {
-    allOrders = Object.entries(data).map(([id, o]) => ({ id, ...o }));
+    allOrders = Object.entries(data).map(([id, o]) => {
+  const status = String(o.status || "").toLowerCase();
+
+  // 🔥 BACKFILL doneAt CHO ĐƠN ĐÃ DONE
+  if (status === "done" && !o.doneAt) {
+    o.doneAt = Date.now(); 
+    // ⚠️ cố ý dùng NOW → vì admin đang xác nhận DONE
+  }
+
+  return {
+    id,
+    ...o,
+    status
+  };
+});
+
   }
 
   if (sessionStorage.getItem("admin") === "1") {
@@ -57,23 +72,25 @@ function renderOrders(orders) {
   orders.sort((a, b) => b.createdAt - a.createdAt);
 
   orders.forEach(order => {
-    const d = new Date(order.createdAt);
+    const time = order.doneAt || order.createdAt;
+    const d = new Date(time);
+    const total = Number(order.total) || 0;
 
    // chỉ tính doanh thu khi DONE
-if (order.status === "done") {
+  if (order.status === "done") {
 
-  if (d.toDateString() === now.toDateString()) {
-    todayTotal += order.total;
+    if (d.toDateString() === now.toDateString()) {
+      todayTotal += total;
+    }
+
+    if (
+      d.getMonth() === now.getMonth() &&
+      d.getFullYear() === now.getFullYear()
+    ) {
+      monthTotal += total;
+    }
+
   }
-
-  if (
-    d.getMonth() === now.getMonth() &&
-    d.getFullYear() === now.getFullYear()
-  ) {
-    monthTotal += order.total;
-  }
-
-}
 
     const div = document.createElement("div");
     div.className = "order";
@@ -117,8 +134,26 @@ if (order.status === "done") {
 }
 
 /* ================= ACTIONS ================= */
-window.updateStatus = (id, status) =>
-  window.db.ref("orders/" + id).update({ status });
+window.updateStatus = (id, status) => {
+  status = status.toLowerCase();
+
+  const order = allOrders.find(o => o.id === id);
+  if (order) {
+    order.status = status;
+    if (status === "done") {
+      order.doneAt = Date.now(); // 👈 QUAN TRỌNG
+    }
+  }
+
+  renderOrders(allOrders);
+
+  const updateData = { status };
+  if (status === "done") {
+    updateData.doneAt = Date.now();
+  }
+
+  window.db.ref("orders/" + id).update(updateData);
+};
 
 window.deleteOrder = id => {
   if (confirm("❗ Xoá đơn hàng này?")) {
@@ -148,7 +183,8 @@ window.filterOrders = function () {
   const toTime = new Date(to).setHours(23, 59, 59, 999);
 
   renderOrders(allOrders.filter(o =>
-    o.createdAt >= fromTime && o.createdAt <= toTime
+    (o.doneAt || o.createdAt) >= fromTime
+ && o.createdAt <= toTime
   ));
 };
 
@@ -327,7 +363,7 @@ window.login = function () {
     sessionStorage.setItem("admin", "1");
     localStorage.setItem("admin_pass", pass);
     showAdmin();
-    renderOrders(allOrders);
+    
   } else {
     // 👁 rung mắt TRƯỚC
     creepyBtn.classList.add("shake");
@@ -339,36 +375,4 @@ window.login = function () {
     }, 3000);
   }
 };
-
-const loginBtn = document.getElementById("loginBtn");
-const loginTrap = document.getElementById("loginTrap");
-
-let canLogin = false;
-
-// theo dõi input
-passInput.addEventListener("input", () => {
-  canLogin = passInput.value.trim() !== "";
-
-  if (canLogin) {
-    loginBtn.classList.remove("locked");
-    loginBtn.style.transform = "translate(0,0)";
-  } else {
-    loginBtn.classList.add("locked");
-  }
-});
-
-// mồi bắt chuột
-loginTrap.addEventListener("mousemove", (e) => {
-  if (canLogin) return;
-
-  const rect = loginTrap.getBoundingClientRect();
-  const dx = e.clientX - (rect.left + rect.width / 2);
-  const dy = e.clientY - (rect.top + rect.height / 2);
-
-  const x = -dx * 0.6;
-  const y = -dy * 0.6;
-
-  loginBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
-
 
