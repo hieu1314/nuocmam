@@ -3,9 +3,9 @@ window.products = [
   { id: 1, price: 40000, img: "images/30nb.png" },
   { id: 2, price: 55000, img: "images/35nb.png" },
   { id: 3, price: 90000, img: "images/40nb.png" },
-  { id: 4, price: 60000, img: "images/60nb.png" },
+  { id: 4, price: 75000, img: "images/60nb.png" },
   { id: 5, price: 90000, img: "images/12nb.png" },
-  { id: 6, price: 65000, img: "images/60dbb.png" },
+  { id: 6, price: 77000, img: "images/60dbb.png" },
   { id: 7, price: 48000, img: "images/20nb.png" },
   { id: 8, price: 18000, img: "images/15n.jpg" }
 ];
